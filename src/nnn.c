@@ -853,6 +853,7 @@ static char *load_input(int fd, const char *path);
 static int set_sort_flags(int r);
 static void statusbar(char *path);
 static bool get_output(char *file, char *arg1, char *arg2, int fdout, bool multi, bool page);
+static void handle_screen_move(enum action sel);
 #ifndef NOFIFO
 static void notify_fifo(bool force);
 #endif
@@ -2922,12 +2923,17 @@ static int (*filterfn)(const fltrexp_t *fltr, const char *fname) = &visible_str;
 
 static void clearfilter(void)
 {
+	DPRINTF_S(__func__);
+	// DPRINTF_S(g_ctx[cfg.curctx].c_fltr);
+
 	char *fltr = g_ctx[cfg.curctx].c_fltr;
 
 	if (fltr[1]) {
 		fltr[REGEX_MAX - 1] = fltr[1];
 		fltr[1] = '\0';
 	}
+
+	// DPRINTF_S(g_ctx[cfg.curctx].c_fltr);
 }
 
 static int entrycmp(const void *va, const void *vb)
@@ -3071,7 +3077,7 @@ try_quit:
 
 		if (c == ERR && presel == MSGWAIT)
 			c = (cfg.filtermode || filterset()) ? FILTER : CONTROL('L');
-		else if (c == FILTER || c == CONTROL('L'))
+		else if (c == CONTROL('L') || c == CONTROL('G'))
 			/* Clear previous filter when manually starting */
 			clearfilter();
 	}
@@ -3228,6 +3234,9 @@ static int matches(const char *fltr)
 	if (cfg.regex && setfilter(&pcrex, fltr))
 		return -1;
 
+	if (!cfg.regex && *fltr && fltr[strlen(fltr) - 1] == '/')
+		return -1;
+
 	ndents = fill(fltr, pcrex);
 
 	if (cfg.regex)
@@ -3237,6 +3246,9 @@ static int matches(const char *fltr)
 
 	/* Search filter */
 	if (cfg.regex && setfilter(&re, fltr))
+		return -1;
+
+	if (!cfg.regex && *fltr && fltr[strlen(fltr) - 1] == '/')
 		return -1;
 
 	ndents = fill(fltr, &re);
@@ -3270,20 +3282,18 @@ static int filterentries(char *path, char *lastname)
 	wint_t ch[2] = {0};
 	int r, total = ndents, len;
 	char *pln = g_ctx[cfg.curctx].c_fltr + 1;
+	enum action sel;
+	uint_t i;
 
 	DPRINTF_S(__func__);
 
 	if (ndents && (ln[0] == FILTER || ln[0] == RFILTER) && *pln) {
-		if (matches(pln) != -1) {
-			move_cursor(dentfind(lastname, ndents), 0);
+		if (matches(pln) != -1)
+			redraw(path);
+		else {
+			clearfilter();
 			redraw(path);
 		}
-
-		if (!cfg.filtermode) {
-			statusbar(path);
-			return 0;
-		}
-
 		len = mbstowcs(wln, ln, REGEX_MAX);
 	} else {
 		ln[0] = wln[0] = cfg.regex ? RFILTER : FILTER;
@@ -3296,8 +3306,10 @@ static int filterentries(char *path, char *lastname)
 	showfilter(ln);
 
 	while ((r = get_wch(ch)) != ERR) {
-		//DPRINTF_D(*ch);
-		//DPRINTF_S(keyname(*ch));
+		DPRINTF_S("HERE4");
+		DPRINTF_D(*ch);
+		DPRINTF_S(keyname(*ch));
+		DPRINTF_S(g_ctx[cfg.curctx].c_fltr);
 
 		switch (*ch) {
 #ifdef KEY_RESIZE
@@ -3312,6 +3324,7 @@ static int filterentries(char *path, char *lastname)
 		case KEY_BACKSPACE: // fallthrough
 		case '\b': // fallthrough
 		case DEL: /* handle DEL */
+			DPRINTF_S("HERE6");
 			if (len != 1) {
 				wln[--len] = '\0';
 				wcstombs(ln, wln, REGEX_MAX);
@@ -3321,18 +3334,22 @@ static int filterentries(char *path, char *lastname)
 				goto end;
 			}
 			// fallthrough
-		case CONTROL('L'):
-			if (*ch == CONTROL('L')) {
+		case CONTROL('G'):
+			if (*ch == CONTROL('G')) {
+				clearfilter();
 				if (wln[1]) {
+					DPRINTF_S("HERE20");
 					ln[REGEX_MAX - 1] = ln[1];
 					ln[1] = wln[1] = '\0';
 					len = 1;
 					ndents = total;
 				} else if (ln[REGEX_MAX - 1]) { /* Show the previous filter */
+					DPRINTF_S("HERE21");
 					ln[1] = ln[REGEX_MAX - 1];
 					ln[REGEX_MAX - 1] = '\0';
 					len = mbstowcs(wln, ln, REGEX_MAX);
 				} else
+					DPRINTF_S("HERE22");
 					goto end;
 			}
 
@@ -3342,6 +3359,11 @@ static int filterentries(char *path, char *lastname)
 			if (matches(pln) != -1)
 				redraw(path);
 
+			showfilter(ln);
+			continue;
+		case CONTROL('U'):
+			ln[1] = wln[1] = '\0';
+			len = 1;
 			showfilter(ln);
 			continue;
 #ifndef NOMOUSE
@@ -3360,12 +3382,49 @@ static int filterentries(char *path, char *lastname)
 			goto end;
 		}
 
-		if (r != OK) /* Handle Fn keys in main loop */
-			break;
+		/* Get actions allowed while the filter is on */
+		if ((*ch < ASCII_MAX && keyname(*ch)[0] == '^' && *ch != '^') || r != OK ) {
 
-		/* Handle all control chars in main loop */
-		if (*ch < ASCII_MAX && keyname(*ch)[0] == '^' && *ch != '^')
-			goto end;
+			for (i = 0; i < (int)ELEMENTS(bindings); ++i)
+				if (*ch == bindings[i].sym)
+					sel = bindings[i].act;
+
+			DPRINTF_S("IMSI");
+
+			switch(sel) {
+			case SEL_NEXT: // fallthrough
+			case SEL_PREV: // fallthrough
+			case SEL_PGDN: // fallthrough
+			case SEL_CTRL_D: // fallthrough
+			case SEL_PGUP: // fallthrough
+			case SEL_CTRL_U: // fallthrough
+			case SEL_HOME: // fallthrough
+			case SEL_END: // fallthrough
+			case SEL_FIRST:
+				if (ndents) {
+					DPRINTF_S("HEREQ2");
+					g_state.move = 1;
+					handle_screen_move(sel);
+					redraw(path);
+				}
+				continue;
+			}
+
+			if (r != OK) { /* Handle Fn keys in main loop */
+				DPRINTF_S("BAR2");
+				break;
+			}
+
+			/* Handle all control chars in main loop */
+			if (*ch < ASCII_MAX && keyname(*ch)[0] == '^' && *ch != '^') {
+				DPRINTF_S("HERE24");
+				DPRINTF_S("HERECHAR");
+				goto end;
+			}
+
+		}
+
+
 
 		if (len == 1) {
 			if (*ch == '?') /* Help and config key, '?' is an invalid regex */
@@ -3416,21 +3475,35 @@ static int filterentries(char *path, char *lastname)
 		} else if (len == REGEX_MAX - 1)
 			continue;
 
+		if (*ch == '/') {
+			if (pdents[cur].flags & DIR_OR_DIRLNK) {
+				*ch = KEY_ENTER;
+				goto end;
+			} else {
+				DPRINTF_S("HERE7");
+				*ch = KEY_BACKSPACE;
+				continue;
+			}
+		}
+
 		wln[len] = (wchar_t)*ch;
 		wln[++len] = '\0';
 		wcstombs(ln, wln, REGEX_MAX);
 
+		DPRINTF_S("HERE8");
 		/* Forward-filtering optimization:
 		 * - new matches can only be a subset of current matches.
 		 */
 		/* ndents = total; */
 #ifdef MATCHFLTR
 		r = matches(pln);
+
 		if (r <= 0) {
 			!r ? unget_wch(KEY_BACKSPACE) : showfilter(ln);
 #else
 		if (matches(pln) == -1) {
 			showfilter(ln);
+			DPRINTF_S("HERE9");
 #endif
 			continue;
 		}
@@ -3443,6 +3516,8 @@ static int filterentries(char *path, char *lastname)
 			goto end;
 		}
 
+		DPRINTF_S("HERE10");
+
 		/*
 		 * redraw() should be above the auto-enter optimization, for
 		 * the case where there's an issue with dir auto-enter, say,
@@ -3452,6 +3527,7 @@ static int filterentries(char *path, char *lastname)
 		 */
 		redraw(path);
 		showfilter(ln);
+		DPRINTF_S("HERE11");
 	}
 end:
 
@@ -3467,6 +3543,7 @@ end:
 
 	/* Return keys for navigation etc. */
 	return *ch;
+
 }
 
 /* Show a prompt with input string and return the changes */
@@ -5956,7 +6033,9 @@ static void handle_screen_move(enum action sel)
 
 	switch (sel) {
 	case SEL_NEXT:
+		DPRINTF_S("HANDLE");
 		if (ndents && (cfg.rollover || (cur != ndents - 1)))
+			DPRINTF_S("HANDLE2");
 			move_cursor((cur + 1) % ndents, 0);
 		break;
 	case SEL_PREV:
@@ -6708,6 +6787,7 @@ begin:
 	while (1) {
 		/* Do not do a double redraw in filterentries */
 		if ((presel != FILTER) || !filterset()) {
+			DPRINTF_S("REDRAWING");
 			redraw(path);
 			statusbar(path);
 		}
@@ -7152,8 +7232,8 @@ nochange:
 			add_bookmark(path, newpath, &presel);
 			goto nochange;
 		case SEL_FLTR:
-			if (!ndents)
-				goto nochange;
+			/* if (!ndents)
+				goto nochange; */
 			/* Unwatch dir if we are still in a filtered view */
 #ifdef LINUX_INOTIFY
 			if (inotify_wd >= 0) {
@@ -7172,11 +7252,15 @@ nochange:
 			}
 #endif
 			presel = filterentries(path, lastname);
+			DPRINTF_S("HERE");
+			DPRINTF_S(keyname(presel));
 			if (presel == ESC) {
+				DPRINTF_S("HEREESC");
 				presel = 0;
 				break;
 			}
 			if (presel == FILTER) { /* Refresh dir and filter again */
+				DPRINTF_S("AGAIN");
 				cd = FALSE;
 				goto begin;
 			}
