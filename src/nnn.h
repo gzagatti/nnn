@@ -84,6 +84,7 @@ enum action {
 	SEL_CHMODX,
 	SEL_ARCHIVE,
 	SEL_SORT,
+	SEL_CANCEL,
 	SEL_REDRAW,
 	SEL_SEL,
 	SEL_SELMUL,
@@ -133,14 +134,16 @@ static struct key bindings[] = {
 	{ KEY_ENTER,      SEL_OPEN },
 	{ '\r',           SEL_OPEN },
 	/* Pure navigate inside */
-	{ KEY_RIGHT,      SEL_NAV_IN },
+	// { KEY_RIGHT,      SEL_NAV_IN },
 	{ 'l',            SEL_NAV_IN },
 	/* Next */
 	{ 'j',            SEL_NEXT },
-	{ KEY_DOWN,       SEL_NEXT },
+	// { KEY_DOWN,       SEL_NEXT },
+	{ '\t',           SEL_NEXT },
 	/* Previous */
 	{ 'k',            SEL_PREV },
-	{ KEY_UP,         SEL_PREV },
+	{ KEY_BTAB,       SEL_PREV },
+	// { KEY_UP,         SEL_PREV },
 	/* Page down */
 	{ KEY_NPAGE,      SEL_PGDN },
 	/* Page up */
@@ -164,7 +167,7 @@ static struct key bindings[] = {
 	/* Initial directory */
 	{ '@',            SEL_CDBEGIN },
 	/* Last visited dir */
-	{ '-',            SEL_CDLAST },
+	{ CONTROL('O'),   SEL_CDLAST },
 	/* Go to / */
 	{ '`',            SEL_CDROOT },
 	/* Leader key */
@@ -173,9 +176,9 @@ static struct key bindings[] = {
 	/* Connect to server over SSHFS */
 	{ 'c',            SEL_REMOTE },
 	/* Cycle contexts in forward direction */
-	{ '\t',           SEL_CYCLE },
+	// { '\t',           SEL_CYCLE },
 	/* Cycle contexts in reverse direction */
-	{ KEY_BTAB,       SEL_CYCLER },
+	// { KEY_BTAB,       SEL_CYCLER },
 	/* Go to/create context N */
 	{ '1',            SEL_CTX1 },
 	{ '2',            SEL_CTX2 },
@@ -210,9 +213,10 @@ static struct key bindings[] = {
 	{ 't',            SEL_SORT },
 	{ CONTROL('T'),   SEL_SORT },
 	/* Redraw window */
-	{ CONTROL('L'),   SEL_REDRAW },
+	{ CONTROL('G'),   SEL_REDRAW },
+	// { CONTROL('U'),   SEL_CANCEL },
 	/* Select current file path */
-	{ CONTROL('J'),   SEL_SEL },
+	// { CONTROL('J'),   SEL_SEL },
 	{ ' ',            SEL_SEL },
 	/* Toggle select multiple files */
 	{ 'm',            SEL_SELMUL },
@@ -271,11 +275,11 @@ static struct key bindings[] = {
 	/* Quit a context */
 	{ 'q',            SEL_QUITCTX },
 	/* Change dir on quit */
-	{ CONTROL('G'),   SEL_QUITCD },
+	// { CONTROL('G'),   SEL_QUITCD },
 	/* Quit */
-	{ CONTROL('Q'),   SEL_QUIT },
+	// { CONTROL('Q'),   SEL_QUIT },
 	/* Quit with an error code */
-	{ 'Q',            SEL_QUITERR },
+	{ 'Q',            SEL_QUIT },
 #ifndef NOMOUSE
 	{ KEY_MOUSE,      SEL_CLICK },
 #endif
