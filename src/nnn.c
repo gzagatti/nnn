@@ -3436,8 +3436,11 @@ static int filterentries(char *path, char *lastname)
 		}
 
 		/* If the only match is a dir, auto-enter and cd into it */
-		if (ndents == 1 && cfg.filtermode
-		    && cfg.autoenter && (pdents[0].flags & DIR_OR_DIRLNK)) {
+		/* if (ndents == 1 && cfg.filtermode
+		    && cfg.autoenter && (pdents[0].flags & DIR_OR_DIRLNK)) { */
+		if (cfg.filtermode
+		    && cfg.autoenter && (pdents[0].flags & DIR_OR_DIRLNK) 
+		    && *ch == '/') {
 			*ch = KEY_ENTER;
 			cur = 0;
 			goto end;
