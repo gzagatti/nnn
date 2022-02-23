@@ -5133,6 +5133,7 @@ static void setexports(void)
 			}
 		}
 	}
+	setenv("NNN_INCLUDE_HIDDEN", xitoa(cfg.showhidden), 1);
 }
 
 static bool run_cmd_as_plugin(const char *file, char *runfile, uchar_t flags)
@@ -7272,7 +7273,7 @@ nochange:
 				break;
 			case SEL_RENAMEMUL:
 				endselection(TRUE);
-				setenv("INCLUDE_HIDDEN", xitoa(cfg.showhidden), 1);
+				setenv("NNN_INCLUDE_HIDDEN", xitoa(cfg.showhidden), 1);
 				setenv("NNN_LIST", listpath ? listroot : "", 1);
 
 				if (!(getutil(utils[UTIL_BASH])

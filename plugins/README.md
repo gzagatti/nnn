@@ -37,6 +37,7 @@ Plugins extend the capabilities of `nnn`. They are _executable_ scripts (or bina
 | [imgview](imgview) | View (thumbnail)images, set wallpaper, [rename](https://github.com/jarun/nnn/wiki/Basic-use-cases#browse-rename-images) and [more](https://wiki.archlinux.org/index.php/Sxiv#Assigning_keyboard_shortcuts)| sh | _see in-file docs_ |
 | [ipinfo](ipinfo) | Fetch external IP address and whois information | sh | curl, whois |
 | [kdeconnect](kdeconnect) | Send selected files to an Android device [✓] | sh | kdeconnect-cli |
+| [gsconnect](gsconnect) | GNOME's implementation of kdeconnect [✓] | sh | GNOME, GSConnect-extension|
 | [launch](launch) | GUI application launcher | sh | fzf |
 | [mimelist](mimelist) | List files by mime in subtree | sh | - |
 | [moclyrics](moclyrics) | Show lyrics of the track playing in moc | sh | [ddgr](https://github.com/jarun/ddgr), [moc](http://moc.daper.net/) |
@@ -209,6 +210,7 @@ When `nnn` executes a plugin, it does the following:
     2. `$2`: The working directory (might differ from `$PWD` in case of symlinked paths; non-canonical).
     3. `$3`: The picker mode output file (`-` for stdout) if `nnn` is executed as a file picker.
 - Sets the environment variable `NNN_PIPE` used to control `nnn` active directory.
+- Sets the environment variable `NNN_INCLUDE_HIDDEN` to `1` if hidden files are active, `0` otherwise.
 - Exports the [special variables](https://github.com/jarun/nnn/wiki/Concepts#special-variables).
 
 Plugins can also read the `.selection` file in the config directory.
