@@ -1,6 +1,6 @@
 VERSION = $(shell grep -m1 VERSION $(SRC) | cut -f 2 -d'"')
 
-PREFIX ?= /usr/local
+PREFIX ?= $(HOME)/.local
 MANPREFIX ?= $(PREFIX)/share/man
 DESKTOPPREFIX ?= $(PREFIX)/share/applications
 DESKTOPICONPREFIX ?= $(PREFIX)/share/icons/hicolor
@@ -19,7 +19,7 @@ O_NOMOUSE := 0  # no mouse support
 O_NOBATCH := 0  # no built-in batch renamer
 O_NOFIFO := 0  # no FIFO previewer support
 O_CTX8 := 0  # enable 8 contexts
-O_ICONS := 0  # support icons-in-terminal
+O_ICONS := 1  # support icons-in-terminal
 O_NERD := 0  # support icons-nerdfont
 O_EMOJI := 0  # support emoji
 O_QSORT := 0  # use Alexey Tourbin's QSORT implementation
@@ -33,7 +33,7 @@ O_NOSORT := 0  # disable sorting entries on dir load
 # User patches
 O_COLEMAK := 0 # change key bindings to colemak compatible layout
 O_COLEMAK-DH := 0 # change key bindings to colemak-dh compatible layout
-O_GITSTATUS := 0 # add git status to detail view
+O_GITSTATUS := 1 # add git status to detail view
 O_NAMEFIRST := 0 # print file name first, add uid and guid to detail view
 O_RESTOREPREVIEW := 0 # add preview pipe to close and restore preview pane
 
