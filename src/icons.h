@@ -48,12 +48,12 @@
 #define ICON_ARROW_DOWN    ICON_STR(MD_ARROW_DOWNWARD, "󰁅", "⬇")
 
 /* GENERIC */
-#define ICON_DIRECTORY     ICON_STR(FA_FOLDER, "", "📂")
-#define ICON_FILE          ICON_STR(FA_FILE, "󰈔", "📃")
-#define ICON_EXEC          ICON_STR(FA_COG, "", "⚙️ ")
+#define ICON_DIRECTORY     ICON_STR(MD_FOLDER, "", "📂")
+#define ICON_FILE          ICON_STR(FA_FILE_TEXT_O, "󰈔", "📃")
+#define ICON_EXEC          ICON_STR(FA_ASTERISK, "", "⚙️ ")
 
 /* Top level and common icons */
-#define ICON_ARCHIVE       ICON_STR(FA_FILE_ARCHIVE_O, "󰀼", "📦")
+#define ICON_ARCHIVE       ICON_STR(MD_ARCHIVE, "󰀼", "📦")
 #define ICON_BRIEFCASE     ICON_STR(FA_BRIEFCASE, "󰃖", "💼")
 #define ICON_C             ICON_STR(MFIZZ_C, "", "🇨 ")
 #define ICON_CHANGELOG     ICON_STR(FA_HISTORY, "󰋚", "🔺")
@@ -62,10 +62,10 @@
 #define ICON_CONFIGURE     ICON_STR(FILE_CONFIG, "", "🔧")
 #define ICON_CPLUSPLUS     ICON_STR(MFIZZ_CPLUSPLUS, "", ICON_C)
 #define ICON_DATABASE      ICON_STR(MFIZZ_DATABASE_ALT2, "󰆼", "🗃️ ")
-#define ICON_DESKTOP       ICON_STR(FA_DESKTOP, "󰟀", "🖥️ ")
+#define ICON_DESKTOP       ICON_STR(MD_DESKTOP_WINDOWS, "󰟀", "🖥️ ")
 #define ICON_DJVU          ICON_STR(FA_PAPERCLIP, "", "📎")
 #define ICON_DOCUMENT      ICON_STR(FA_FILE_TEXT_O, "󰈙", "🗒 ")
-#define ICON_DOWNLOADS     ICON_STR(FA_DOWNLOAD, "󰃘", "📥")
+#define ICON_DOWNLOADS     ICON_STR(MD_FILE_DOWNLOAD, "󰃘", "📥")
 #define ICON_ELIXIR        ICON_STR(MFIZZ_ELIXIR, "", "💧")
 #define ICON_ENCRYPT       ICON_STR("", "󰌆", "🔒")
 #define ICON_FSHARP        ICON_STR(DEV_FSHARP, "", "")
@@ -80,12 +80,12 @@
 #define ICON_MAKEFILE      ICON_STR(FILE_CMAKE, "󰆍", "🛠 ")
 #define ICON_MANUAL        ICON_STR(FILE_MANPAGE, "󱓷", "❓")
 #define ICON_MS_EXCEL      ICON_STR(FILE_EXCEL, "󰈛", ICON_WORDDOC)
-#define ICON_MUSIC         ICON_STR(FA_MUSIC, "󱍙", "🎧")
+#define ICON_MUSIC         ICON_STR(MD_MUSIC_NOTE, "󱍙", "🎧")
 #define ICON_MUSICFILE     ICON_STR(FA_FILE_AUDIO_O, "󰎈", ICON_MUSIC)
 #define ICON_OPTICALDISK   ICON_STR(LINEA_MUSIC_CD, "", "💿")
-#define ICON_PDF           ICON_STR(FA_FILE_PDF_O, "󰈦", "📕")
+#define ICON_PDF           ICON_STR(MD_PICTURE_AS_PDF, "󰈦", "📕")
 #define ICON_PHOTOSHOP     ICON_STR(DEV_PHOTOSHOP, "", ICON_PICTUREFILE)
-#define ICON_PICTUREFILE   ICON_STR(FA_FILE_IMAGE_O, "󰈟", ICON_PICTURES)
+#define ICON_PICTUREFILE   ICON_STR(MD_IMAGE, "󰈟", ICON_PICTURES)
 #define ICON_PICTURES      ICON_STR(MD_CAMERA_ALT, "󰉔", "🎨")
 #define ICON_PLAYLIST      ICON_STR(ICON_MUSICFILE, "󱍙", "")
 #define ICON_POWERPOINT    ICON_STR(FILE_POWERPOINT, "󰈧", "📊")
@@ -139,7 +139,7 @@
 	COLOR_X(COLOR_VIDEO1,       226)  /* Yellow1 */ \
 	COLOR_X(COLOR_AUDIO,        220)  /* Gold1 */ \
 	COLOR_X(COLOR_AUDIO1,       205)  /* HotPink */ \
-	COLOR_X(COLOR_IMAGE,         82)  /* Chartreuse2 */ \
+	COLOR_X(COLOR_IMAGE,         70)  /*  */ \
 	COLOR_X(COLOR_DOCS,         202)  /* OrangeRed1 */ \
 	COLOR_X(COLOR_ARCHIVE,      209)  /* Salmon1 */ \
 	COLOR_X(COLOR_C,             81)  /* SteelBlue1 */ \
@@ -147,13 +147,13 @@
 	COLOR_X(COLOR_JAVASCRIPT,    47)  /* SpringGreen2 */ \
 	COLOR_X(COLOR_REACT,         39)  /* DeepSkyBlue1 */ \
 	COLOR_X(COLOR_CSS,          199)  /* DeepPink1 */ \
-	COLOR_X(COLOR_PYTHON,       227)  /* LightGoldenrod1 */ \
+	COLOR_X(COLOR_PYTHON,       220)  /* Gold */ \
 	COLOR_X(COLOR_LUA,           19)  /* Blue3 */ \
 	COLOR_X(COLOR_DOCUMENT,      15)  /* White */ \
 	COLOR_X(COLOR_FSHARP,        31)  /* DeepSkyBlue3 */ \
 	COLOR_X(COLOR_RUBY,         160)  /* Red3 */ \
 	COLOR_X(COLOR_SCALA,        196)  /* Red1 */ \
-	COLOR_X(COLOR_SHELL,         47)  /* SpringGreen2 */ \
+	COLOR_X(COLOR_SHELL,         35)  /*  */ \
 	COLOR_X(COLOR_VIM,           28)  /* Green4 */ \
 	COLOR_X(COLOR_ELIXIR,       104)  /* MediumPurple */ \
 
