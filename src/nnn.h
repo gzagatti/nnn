@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2014-2016, Lazaros Koromilas <lostd@2f30.org>
  * Copyright (C) 2014-2016, Dimitris Papastamos <sin@2f30.org>
- * Copyright (C) 2016-2022, Arun Prakash Jana <engineerarun@gmail.com>
+ * Copyright (C) 2016-2023, Arun Prakash Jana <engineerarun@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,6 +31,7 @@
 #pragma once
 
 #include <curses.h>
+#include <wchar.h>
 
 #define CONTROL(c) ((c) & 0x1f)
 
@@ -56,6 +57,8 @@ enum action {
 	SEL_HOME,
 	SEL_END,
 	SEL_FIRST,
+	SEL_JUMP,
+	SEL_YOUNG,
 	SEL_CDHOME,
 	SEL_CDBEGIN,
 	SEL_CDLAST,
@@ -104,6 +107,7 @@ enum action {
 	SEL_AUTONEXT,
 	SEL_EDIT,
 	SEL_PLUGIN,
+	SEL_SELSIZE,
 	SEL_SHELL,
 	SEL_LAUNCH,
 	SEL_PROMPT,
@@ -122,7 +126,7 @@ enum action {
 
 /* Associate a pressed key to an action */
 struct key {
-	int sym;         /* Key pressed */
+	wint_t sym;      /* Key pressed */
 	enum action act; /* Action */
 };
 
@@ -162,6 +166,9 @@ static struct key bindings[] = {
 	{ CONTROL('E'),   SEL_END },
 	/* Go to first file */
 	{ '\'',           SEL_FIRST },
+	/* Jump to an entry number/offset */
+	{ 'J',            SEL_JUMP },
+	{ CONTROL('Y'),   SEL_YOUNG },
 	/* HOME */
 	{ '~',            SEL_CDHOME },
 	/* Initial directory */
@@ -213,11 +220,12 @@ static struct key bindings[] = {
 	{ 't',            SEL_SORT },
 	{ CONTROL('T'),   SEL_SORT },
 	/* Redraw window */
-	{ CONTROL('G'),   SEL_REDRAW },
+	{ CONTROL('R'),   SEL_REDRAW },
 	// { CONTROL('U'),   SEL_CANCEL },
 	/* Select current file path */
 	// { CONTROL('J'),   SEL_SEL },
 	{ ' ',            SEL_SEL },
+	{ '+',            SEL_SEL },
 	/* Toggle select multiple files */
 	{ 'm',            SEL_SELMUL },
 	/* Select all files in current dir */
@@ -244,19 +252,21 @@ static struct key bindings[] = {
 	/* Create a new file */
 	{ 'n',            SEL_NEW },
 	/* Show rename prompt */
-	{ CONTROL('R'),   SEL_RENAME },
+	{ 'r',   SEL_RENAME },
 	/* Rename contents of current dir */
-	{ 'r',            SEL_RENAMEMUL },
+	{ 'R',            SEL_RENAMEMUL },
 	/* Disconnect a SSHFS mount point */
 	{ 'u',            SEL_UMOUNT },
 	/* Show help */
 	{ '?',            SEL_HELP },
-	/* Quit a context */
-	{ '+',            SEL_AUTONEXT },
+	/* Toggle auto-advance on file open */
+	{ CONTROL('J'),   SEL_AUTONEXT },
 	/* Edit in EDITOR */
 	{ 'e',            SEL_EDIT },
 	/* Run a plugin */
 	{ ';',            SEL_PLUGIN },
+	/* Show total size of listed selection */
+	{ 'S',            SEL_SELSIZE },
 	/* Run command */
 	{ '!',            SEL_SHELL },
 	{ CONTROL(']'),   SEL_SHELL },
@@ -275,7 +285,7 @@ static struct key bindings[] = {
 	/* Quit a context */
 	{ 'q',            SEL_QUITCTX },
 	/* Change dir on quit */
-	// { CONTROL('G'),   SEL_QUITCD },
+	{ CONTROL('G'),   SEL_QUITCD },
 	/* Quit */
 	// { CONTROL('Q'),   SEL_QUIT },
 	/* Quit with an error code */
