@@ -49,11 +49,11 @@
 
 /* GENERIC */
 #define ICON_DIRECTORY     ICON_STR(MD_FOLDER, "", "📂")
-#define ICON_FILE          ICON_STR(FA_FILE_TEXT_O, "󰈔", "📃")
-#define ICON_EXEC          ICON_STR(FA_ASTERISK, "", "⚙️ ")
+#define ICON_FILE          ICON_STR(FA_FILE, "󰈔", "📃")
+#define ICON_EXEC          ICON_STR(FA_COG, "", "⚙️ ")
 
 /* Top level and common icons */
-#define ICON_ARCHIVE       ICON_STR(MD_ARCHIVE, "󰀼", "📦")
+#define ICON_ARCHIVE       ICON_STR(FA_FILE_ARCHIVE_O, "󰀼", "📦")
 #define ICON_BRIEFCASE     ICON_STR(FA_BRIEFCASE, "󰃖", "💼")
 #define ICON_C             ICON_STR(MFIZZ_C, "", "🇨 ")
 #define ICON_CHANGELOG     ICON_STR(FA_HISTORY, "󰋚", "🔺")
@@ -83,9 +83,9 @@
 #define ICON_MUSIC         ICON_STR(MD_MUSIC_NOTE, "󱍙", "🎧")
 #define ICON_MUSICFILE     ICON_STR(FA_FILE_AUDIO_O, "󰎈", ICON_MUSIC)
 #define ICON_OPTICALDISK   ICON_STR(LINEA_MUSIC_CD, "", "💿")
-#define ICON_PDF           ICON_STR(MD_PICTURE_AS_PDF, "󰈦", "📕")
+#define ICON_PDF           ICON_STR(FA_FILE_PDF_O, "󰈦", "📕")
 #define ICON_PHOTOSHOP     ICON_STR(DEV_PHOTOSHOP, "", ICON_PICTUREFILE)
-#define ICON_PICTUREFILE   ICON_STR(MD_IMAGE, "󰈟", ICON_PICTURES)
+#define ICON_PICTUREFILE   ICON_STR(FA_IMAGE, "󰈟", ICON_PICTURES)
 #define ICON_PICTURES      ICON_STR(MD_CAMERA_ALT, "󰉔", "🎨")
 #define ICON_PLAYLIST      ICON_STR(ICON_MUSICFILE, "󱍙", "")
 #define ICON_POWERPOINT    ICON_STR(FILE_POWERPOINT, "󰈧", "📊")
