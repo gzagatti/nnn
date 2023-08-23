@@ -59,9 +59,9 @@
 #define ICON_CHANGELOG     ICON_STR(FA_HISTORY, "", "🔺")
 #define ICON_CHESS         ICON_STR("", "", "")
 #define ICON_CLOJURE       ICON_STR(MFIZZ_CLOJURE, "", "")
-#define ICON_CONFIGURE     ICON_STR(FILE_CONFIG, "", "🔧")
+#define ICON_CONFIGURE     ICON_STR(FILE_CONFIG, "", "🔧")
 #define ICON_CPLUSPLUS     ICON_STR(MFIZZ_CPLUSPLUS, "", ICON_C)
-#define ICON_DATABASE      ICON_STR(MFIZZ_DATABASE_ALT2, "", "🗃️ ")
+#define ICON_DATABASE      ICON_STR(MFIZZ_DATABASE_ALT2, "", "🗃️ ")
 #define ICON_DESKTOP       ICON_STR(FA_DESKTOP, "", "🖥️ ")
 #define ICON_DJVU          ICON_STR(FA_PAPERCLIP, "", "📎")
 #define ICON_DOCUMENT      ICON_STR(FA_FILE_TEXT_O, "", "🗒 ")
@@ -70,7 +70,7 @@
 #define ICON_ENCRYPT       ICON_STR("", "", "🔒")
 #define ICON_FSHARP        ICON_STR(DEV_FSHARP, "", "")
 #define ICON_FONT          ICON_STR(FILE_FONT, "", "")
-#define ICON_GIT           ICON_STR(FA_GIT, "", "🌱")
+#define ICON_GIT           ICON_STR(FA_GIT, "", "🌱")
 #define ICON_HASKELL       ICON_STR("", "", "")
 #define ICON_HTML          ICON_STR(FA_FILE_CODE_O, "", "")
 #define ICON_JAVA          ICON_STR(MFIZZ_JAVA, "", "☕")
@@ -80,8 +80,7 @@
 #define ICON_MAKEFILE      ICON_STR(FILE_CMAKE, "", "🛠 ")
 #define ICON_MANUAL        ICON_STR(FILE_MANPAGE, "", "❓")
 #define ICON_MS_EXCEL      ICON_STR(FILE_EXCEL, "", ICON_WORDDOC)
-#define ICON_MUSIC         ICON_STR(FA_MUSIC, "", "🎧")
-#define ICON_MUSICFILE     ICON_STR(FA_FILE_AUDIO_O, "", ICON_MUSIC)
+#define ICON_MUSICFILE     ICON_STR(FA_FILE_AUDIO_O, "", "🎧")
 #define ICON_OPTICALDISK   ICON_STR(LINEA_MUSIC_CD, "", "💿")
 #define ICON_PDF           ICON_STR(FA_FILE_PDF_O, "", "📕")
 #define ICON_PHOTOSHOP     ICON_STR(DEV_PHOTOSHOP, "", ICON_PICTUREFILE)
@@ -97,10 +96,8 @@
 #define ICON_SASS          ICON_STR("", "", "")
 #define ICON_SCRIPT        ICON_STR(MFIZZ_SCRIPT, "", "📜")
 #define ICON_SUBTITLE      ICON_STR(FA_COMMENTS_O, "", "💬")
-#define ICON_TEMPLATES     ICON_STR(FA_PAPERCLIP, "", "📎")
 #define ICON_TEX           ICON_STR(FILE_TEX, "", ICON_DOCUMENT)
-#define ICON_VIDEOFILE     ICON_STR(FA_FILE_MOVIE_O, "", ICON_VIDEOS)
-#define ICON_VIDEOS        ICON_STR(FA_FILM, "", "🎞 ")
+#define ICON_VIDEOFILE     ICON_STR(FA_FILE_MOVIE_O, "", "🎞 ")
 #define ICON_VIM           ICON_STR(DEV_VIM, "", "")
 #define ICON_WORDDOC       ICON_STR(FILE_WORD, "", "📘")
 
@@ -109,7 +106,7 @@
 #define ICON_EXT_COFFEE    ICON_STR(MFIZZ_COFFEE_BEAN, "", "")
 #define ICON_EXT_CSS       ICON_STR(MFIZZ_CSS3, "", "🦋")
 #define ICON_EXT_DEB       ICON_STR(MFIZZ_DEBIAN, "", ICON_LINUX)
-#define ICON_EXT_DIFF      ICON_STR(FILE_DIFF, "", "📋")
+#define ICON_EXT_DIFF      ICON_STR(FILE_DIFF, "", "📋")
 #define ICON_EXT_GO        ICON_STR(MFIZZ_GO, "", "")
 #define ICON_EXT_JSON      ICON_STR(ICON_JAVASCRIPT, "", ICON_JAVASCRIPT)
 #define ICON_EXT_LUA       ICON_STR(FILE_LUA, "", "🌘")
@@ -118,7 +115,7 @@
 #define ICON_EXT_MD        ICON_STR(DEV_MARKDOWN, "", "📝")
 #define ICON_EXT_MSI       ICON_STR(FA_WINDOWS, "", "🪟")
 #define ICON_EXT_NIX       ICON_STR("", "", "")
-#define ICON_EXT_PATCH     ICON_STR(FILE_PATCH, "", "🩹")
+#define ICON_EXT_PATCH     ICON_STR(FILE_PATCH, "", "🩹")
 #define ICON_EXT_PHP       ICON_STR(MFIZZ_PHP, "", "🌐")
 #define ICON_EXT_ROM       ICON_STR(FA_LOCK, "", "")
 #define ICON_EXT_RSS       ICON_STR(FA_RSS_SQUARE, "", "📡")
@@ -184,11 +181,7 @@ static const struct icon_pair icons_name[] = {
 	{"Desktop",     ICON_DESKTOP,   0},
 	{"Documents",   ICON_BRIEFCASE, 0},
 	{"Downloads",   ICON_DOWNLOADS, 0},
-	{"Music",       ICON_MUSIC,     0},
-	{"Pictures",    ICON_PICTURES,  0},
 	{"Public",      ICON_PUBLIC,    0},
-	{"Templates",   ICON_TEMPLATES, 0},
-	{"Videos",      ICON_VIDEOS,    0},
 	{"CHANGELOG",   ICON_CHANGELOG, COLOR_DOCS},
 	{"configure",   ICON_CONFIGURE, 0},
 	{"License",     ICON_LICENSE,   COLOR_DOCS},
