@@ -279,11 +279,11 @@ static struct key bindings[] = {
 	/* Quit a context */
 	{ 'q',            SEL_QUITCTX },
 	/* Change dir on quit */
-	{ CONTROL('G'),   SEL_QUITCD },
+	{ 'Q',   SEL_QUITCD },
 	/* Quit */
-	{ CONTROL('Q'),   SEL_QUIT },
+	// { CONTROL('Q'),   SEL_QUIT },
 	/* Quit with an error code */
-	{ 'Q',            SEL_QUITERR },
+	// { 'Q',            SEL_QUITERR },
 #ifndef NOMOUSE
 	{ KEY_MOUSE,      SEL_CLICK },
 #endif
