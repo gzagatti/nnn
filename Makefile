@@ -32,10 +32,11 @@ O_NOSORT := 0  # disable sorting entries on dir load
 
 # User patches
 O_COLEMAK := 0 # change key bindings to colemak compatible layout
-O_COLEMAK-DH := 0 # change key bindings to colemak-dh compatible layout
 O_GITSTATUS := 1 # add git status to detail view
 O_NAMEFIRST := 0 # print file name first, add uid and guid to detail view
 O_RESTOREPREVIEW := 0 # add preview pipe to close and restore preview pane
+
+T_ICONS := 0 # test if multiple icons options are set and fail
 
 # convert targets to flags for backwards compatibility
 ifneq ($(filter debug,$(MAKECMDGOALS)),)
@@ -98,16 +99,28 @@ endif
 ifeq ($(strip $(O_ICONS)),1)
 	ICONS_INCLUDE = icons-generated-icons-in-term.h
 	CPPFLAGS += -DICONS_IN_TERM -DICONS_INCLUDE=\"$(ICONS_INCLUDE)\"
+ifeq ($(strip $(T_ICONS)),1)
+$(error Choose only one system for icons (O_ICONS, O_NERD or O_EMOJI))
+endif
+	T_ICONS := 1
 endif
 
 ifeq ($(strip $(O_NERD)),1)
 	ICONS_INCLUDE = icons-generated-nerd.h
 	CPPFLAGS += -DNERD -DICONS_INCLUDE=\"$(ICONS_INCLUDE)\"
+ifeq ($(strip $(T_ICONS)),1)
+$(error Choose only one system for icons (O_ICONS, O_NERD or O_EMOJI))
+endif
+	T_ICONS := 1
 endif
 
 ifeq ($(strip $(O_EMOJI)),1)
 	ICONS_INCLUDE = icons-generated-emoji.h
 	CPPFLAGS += -DEMOJI -DICONS_INCLUDE=\"$(ICONS_INCLUDE)\"
+ifeq ($(strip $(T_ICONS)),1)
+$(error Choose only one system for icons (O_ICONS, O_NERD or O_EMOJI))
+endif
+	T_ICONS := 1
 endif
 
 ifeq ($(strip $(O_QSORT)),1)
@@ -169,7 +182,6 @@ LOGOSVG = misc/logo/logo.svg
 LOGO64X64 = misc/logo/logo-64x64.png
 
 COLEMAK = patches/colemak
-COLEMAK-DH = patches/colemak-dh
 GITSTATUS = patches/gitstatus
 NAMEFIRST = patches/namefirst
 RESTOREPREVIEW = patches/restorepreview
@@ -342,9 +354,6 @@ endif
 ifeq ($(strip $(O_COLEMAK)),1)
 	patch --forward $(PATCH_OPTS) --strip=1 --input=$(COLEMAK)/mainline.diff
 endif
-ifeq ($(strip $(O_COLEMAK-DH)),1)
-	patch --forward $(PATCH_OPTS) --strip=1 --input=$(COLEMAK-DH)/mainline.diff
-endif
 
 postpatch:
 ifeq ($(strip $(O_NAMEFIRST)),1)
@@ -360,9 +369,6 @@ ifeq ($(strip $(O_RESTOREPREVIEW)),1)
 endif
 ifeq ($(strip $(O_COLEMAK)),1)
 	patch --reverse $(PATCH_OPTS) --strip=1 --input=$(COLEMAK)/mainline.diff
-endif
-ifeq ($(strip $(O_COLEMAK-DH)),1)
-	patch --reverse $(PATCH_OPTS) --strip=1 --input=$(COLEMAK-DH)/mainline.diff
 endif
 
 skip: ;

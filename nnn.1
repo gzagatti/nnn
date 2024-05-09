@@ -1,4 +1,4 @@
-.Dd Apr 13, 2023
+.Dd Aug 27, 2023
 .Dt NNN 1
 .Os
 .Sh NAME
@@ -148,7 +148,7 @@ supports the following options:
 .Pp
 .Fl "T key"
         sort order
-        keys: 'a'u / 'd'u / 'e'xtension / 'r'everse / 's'ize / 't'ime / 'v'ersion
+        keys: 'a'pparent disk usage / 'd'isk usage / 'e'xtension / 'r'everse / 's'ize / 't'ime / 'v'ersion
         capitalize to reverse (except 'r')
 .Pp
 .Fl u
@@ -353,7 +353,7 @@ Handy bash/zsh shell function to list files by mime-type in current directory:
 
     list ()
     {
-        find . -maxdepth 1 | file -if- | grep "$1" | awk -F: '{printf "%s\0", $1}' | nnn
+        find . -maxdepth 1 | file -if- | grep "$1" | awk -F: '{printf "%s%c", $1, 0}' | nnn
     }
 .Ed
 .Pp

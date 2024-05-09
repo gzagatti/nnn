@@ -16,6 +16,8 @@ Plugins extend the capabilities of `nnn`. They are _executable_ scripts (or bina
 | [autojump](autojump) | Navigate to dir/path | sh | [jump](https://github.com/gsamokovarov/jump)/autojump/<br>zoxide/z/[z.lua](https://github.com/skywind3000/z.lua) |
 | [boom](boom) | Play random music from dir | sh | [moc](http://moc.daper.net/) |
 | [bulknew](bulknew) | Create multiple files/dirs at once | bash | sed, xargs, mktemp |
+| [cbcopy-mac](cbcopy-mac) | Copy the hovered file to MacOS clipboard | applescript | macos |
+| [cbpaste-mac](cbpaste-mac) | Pastes files from MacOS clipboard into currect directory | macos |
 | [cdpath](cdpath) | `cd` to the directory from `CDPATH` | sh | fzf |
 | [chksum](chksum) | Create and verify checksums [✓] | sh | md5sum,<br>sha256sum |
 | [cmusq](cmusq) | Queue/play files/dirs in cmus player [✓] | sh | cmus, pgrep |
@@ -39,7 +41,7 @@ Plugins extend the capabilities of `nnn`. They are _executable_ scripts (or bina
 | [ipinfo](ipinfo) | Fetch external IP address and whois information | sh | curl, whois |
 | [kdeconnect](kdeconnect) | Send selected files to an Android device [✓] | sh | kdeconnect-cli |
 | [launch](launch) | GUI application launcher | sh | fzf |
-| [mimelist](mimelist) | List files by mime in subtree | sh | - |
+| [mimelist](mimelist) | List files by mime in subtree | sh | file/mimetype |
 | [moclyrics](moclyrics) | Show lyrics of the track playing in moc | sh | [ddgr](https://github.com/jarun/ddgr), [moc](http://moc.daper.net/) |
 | [mocq](mocq) | Queue/play selection/dir/file in moc [✓] | sh | [moc](http://moc.daper.net/) |
 | [mp3conv](mp3conv) | Extract audio from multimedia as mp3 | sh | ffmpeg |
@@ -367,6 +369,10 @@ if [ -n "$pattern" ]; then
     eval "rg -l0 --hidden -S $pattern" > "$NNN_PIPE"
 fi
 ```
+
+#### Change directory
+
+    NNN_PLUG='c:!read -r to && [ -n "$to" ] && printf "0c%s" "${to}" > "$NNN_PIPE"*'
 
 ## Contributing plugins
 
